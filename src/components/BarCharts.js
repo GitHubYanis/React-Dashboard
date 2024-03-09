@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { 
     Chart as ChartJS,
@@ -21,14 +21,21 @@ ChartJS.register(
     Legend
 );
 
-const BarCharts = () => {
-    
+const BarCharts = ({ selectedSeason, selectedLevel, selectedPass }) => {
+    const filteredData = useMemo(() => {
+        return data.filter(entry => (
+            (!selectedSeason || entry.saison === selectedSeason) &&
+            (!selectedLevel || entry.niveau === selectedLevel) &&
+            (!selectedPass || entry.passe === selectedPass)
+        ));
+    }, [selectedSeason, selectedLevel, selectedPass]);
+
     const organizeChartData = () => {
         const levelData = {};
         const seasonData = {};
         const ageGroupData = { "<24": 0, "24-28": 0, "29+": 0 };
 
-        data.forEach(({ niveau, saison, age }) => {
+        filteredData.forEach(({ niveau, saison, age }) => {
             // Levels data:
             levelData[niveau] = (levelData[niveau] || 0) + 1;
 
@@ -115,4 +122,5 @@ const BarCharts = () => {
         </div>
     );
 };
+
 export default BarCharts;

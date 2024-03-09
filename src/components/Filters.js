@@ -1,31 +1,32 @@
 import React from 'react';
 import styles from './Filters.module.css';
 
-const Filters = () => {
-  const seasons = [
+const seasons = [
     { value: '', label: '' },
-    { value: 'spring', label: 'Printemps' },
-    { value: 'summer', label: 'Été' },
-    { value: 'autumn', label: 'Automne' },
-    { value: 'winter', label: 'Hiver' },
-  ];
+    { value: 'printemps', label: 'Printemps' },
+    { value: 'été', label: 'Été' },
+    { value: 'automne', label: 'Automne' },
+    { value: 'hiver', label: 'Hiver' },
+];
 
-  const levels = [
+const levels = [
     { value: '', label: '' },
     { value: 'novice', label: 'Novice' },
-    { value: 'medium', label: 'Moyen' },
-    { value: 'professional', label: 'Professionnel' },
-  ];
+    { value: 'moyen', label: 'Moyen' },
+    { value: 'pro', label: 'Professionnel' },
+];
 
-  const passes = [
+const passes = [
     { value: '', label: '' },
     { value: 'simple', label: 'Simple' },
     { value: 'double', label: 'Double' },
-    { value: 'unlimited', label: 'Illimité' },
-  ];
+    { value: 'illimité', label: 'Illimité' },
+];
 
-  const createDropdown = (options, className) => (
-    <select className={className}>
+const Filters = ({ selectedSeason, selectedLevel, selectedPass, onSeasonChange, onLevelChange, onPassChange }) => {
+
+  const createDropdown = (options, className, onChange, selectedValue) => (
+    <select className={className} onChange={(e) => onChange(e.target.value)} value={selectedValue}>
       {options.map((option) => (
         <option value={option.value}>
           {option.label}
@@ -38,17 +39,17 @@ const Filters = () => {
     <div className={styles.filtersComponent}>
         <div>
             <p>Selectionnez une saison:
-                {createDropdown(seasons, styles['dropdown-seasons'])}
+                {createDropdown(seasons, styles['dropdown-seasons'], onSeasonChange, selectedSeason)}
             </p>
         </div>
         <div>
             <p>Selectionnez un niveau:
-                {createDropdown(levels, styles['dropdown-levels'])}
+                {createDropdown(levels, styles['dropdown-levels'], onLevelChange, selectedLevel)}
             </p>
         </div>
         <div>
             <p>Selectionnez un pass:
-                {createDropdown(passes, styles['dropdown-passes'])}
+                {createDropdown(passes, styles['dropdown-passes'], onPassChange, selectedPass)}
             </p>
         </div>
     </div>
