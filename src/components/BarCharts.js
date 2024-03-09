@@ -10,6 +10,7 @@ import {
     Legend,
 } from 'chart.js';
 import styles from './BarCharts.module.css';
+import data from '../data/database.json';
 
 ChartJS.register(
     CategoryScale,
@@ -21,40 +22,13 @@ ChartJS.register(
 );
 
 const BarCharts = () => {
-    const chartData = [{
-        "id": 0,
-        "saison": "été",
-        "prix": 351,
-        "age": 20,
-        "niveau": "pro",
-        "compte": false,
-        "passe": "double"
-      },
-      {
-        "id": 1,
-        "saison": "printemps",
-        "prix": 481,
-        "age": 29,
-        "niveau": "moyen",
-        "compte": true,
-        "passe": "double"
-      },
-      {
-        "id": 2,
-        "saison": "printemps",
-        "prix": 173,
-        "age": 28,
-        "niveau": "pro",
-        "compte": true,
-        "passe": "illimité"
-      }];
-
+    
     const organizeChartData = () => {
         const levelData = {};
         const seasonData = {};
         const ageGroupData = { "<24": 0, "24-28": 0, "29+": 0 };
 
-        chartData.forEach(({ niveau, saison, age }) => {
+        data.forEach(({ niveau, saison, age }) => {
             // Levels data:
             levelData[niveau] = (levelData[niveau] || 0) + 1;
 
@@ -86,7 +60,7 @@ const BarCharts = () => {
         <div>
             <h2>Statistiques</h2>
             <div className={styles.barChartsContainer}>
-                {chartData.length > 0 ? (
+                {data.length > 0 ? (
                     <>
                         <div className={`${styles.chart} ${styles.niveauChart}`}>
                             <h3>Quantité par Niveau</h3>
