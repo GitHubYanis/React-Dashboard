@@ -1,0 +1,11 @@
+.barChartsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .chart {
+    flex: 1;
+    margin: 10px;
+  }

@@ -12,16 +12,16 @@ const Filters = () => {
 
   const levels = [
     { value: '', label: '' },
-    { value: 'beginner', label: 'Débutant' },
-    { value: 'intermediate', label: 'Intermédiaire' },
-    { value: 'advanced', label: 'Avancé' },
+    { value: 'novice', label: 'Novice' },
+    { value: 'medium', label: 'Moyen' },
+    { value: 'professional', label: 'Professionnel' },
   ];
 
   const passes = [
     { value: '', label: '' },
-    { value: 'passA', label: 'Pass A' },
-    { value: 'passB', label: 'Pass B' },
-    { value: 'passC', label: 'Pass C' },
+    { value: 'simple', label: 'Simple' },
+    { value: 'double', label: 'Double' },
+    { value: 'unlimited', label: 'Illimité' },
   ];
 
   const createDropdown = (options, className) => (

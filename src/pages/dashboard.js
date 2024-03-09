@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import Filters from '../components/Filters';
+import AveragePrice from '../components/AveragePrice';
+import BarCharts from '../components/BarCharts';
 
 const Dashboard = () => {
     // const [selectedSeason, setSelectedSeason] = useState('');
     // const [selectedLevel, setSelectedLevel] = useState('');
     // const [selectedPass, setSelectedPass] = useState('');
   
-    // // Event handlers to update state when dropdowns are changed
     // const handleSeasonChange = (value) => {
     //   setSelectedSeason(value);
     // };
@@ -29,18 +30,17 @@ const Dashboard = () => {
           onLevelChange={handleLevelChange}
           onPassChange={handlePassChange}
         /> */}
-        {/* <AveragePrice
-          selectedSeason={selectedSeason}
+        <AveragePrice/>
+          {/* selectedSeason={selectedSeason}
           selectedLevel={selectedLevel}
           selectedPass={selectedPass}
-        />
-        <BarCharts
-          selectedSeason={selectedSeason}
+        /> */}
+        <BarCharts/>
+          {/* selectedSeason={selectedSeason}
           selectedLevel={selectedLevel}
           selectedPass={selectedPass}
         /> */}
       </div>
     );
   };
-  
   export default Dashboard;
