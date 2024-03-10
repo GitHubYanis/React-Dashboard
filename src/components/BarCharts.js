@@ -21,12 +21,12 @@ ChartJS.register(
     Legend
 );
 
-const BarCharts = ({ selectedSeason, selectedLevel, selectedPass, onSeasonChange, onLevelChange, onPassChange }) => {
+const BarCharts = ({ selectedSeason, selectedLevel, selectedPass, onSeasonChange, onLevelChange}) => {
     const filteredData = useFilteredData(selectedSeason, selectedLevel, selectedPass);
 
     const organizeChartData = () => {
-        const levelData = {};
-        const seasonData = {};
+        const levelData = {"novice": 0, "moyen": 0, "pro": 0 };
+        const seasonData = {"printemps": 0, "été": 0, "automne": 0, "hiver": 0 };
         const ageGroupData = { "24 ans et moins": 0, "24 à 28 ans": 0, "29 ans et plus": 0 };
 
         filteredData.forEach(({ niveau, saison, age }) => {
@@ -64,27 +64,27 @@ const BarCharts = ({ selectedSeason, selectedLevel, selectedPass, onSeasonChange
             }
         },
         onClick: (_, elements) => {
-            if(xAxisTitle !== 'Groupe d\'Âge' && elements.length > 0) {
-                const orderedLabels = { 
-                    levels: ["pro", "moyen", "novice"], 
-                    seasons: ["été", "printemps", "automne", "hiver"] 
-                };
-                const clickedElementIndex = elements[0].index;
-    
-                let selectedBar;
-                switch (xAxisTitle) {
-                    case 'Saisons':
-                        selectedBar = orderedLabels.seasons[clickedElementIndex];
-                        onSeasonChange(selectedBar);
-                        break;
-                    case 'Niveaux':
-                        selectedBar = orderedLabels.levels[clickedElementIndex];
-                        onLevelChange(selectedBar);
-                        break;
-                    default:
-                        break;
-                }
+            if (xAxisTitle === 'Groupes d\'Âge' || elements.length === 0) {
+                return;
             }
+            
+            const orderedLabels = { 
+                levels: ["novice", "moyen", "pro"], 
+                seasons: ["printemps", "été", "automne", "hiver"] 
+            };
+
+            const clickedElementIndex = elements[0].index;
+    
+            if (xAxisTitle === 'Saisons' && selectedSeason !== orderedLabels.seasons[clickedElementIndex]) {
+                onSeasonChange(orderedLabels.seasons[clickedElementIndex]);
+            } 
+            else if (xAxisTitle === 'Niveaux' && selectedLevel !== orderedLabels.levels[clickedElementIndex]) {
+                onLevelChange(orderedLabels.levels[clickedElementIndex]);
+            } 
+            else {
+                onSeasonChange('');
+                onLevelChange('');
+            }   
         },
     });
 

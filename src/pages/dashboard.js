@@ -45,7 +45,6 @@ const Dashboard = () => {
                 selectedPass={selectedPass}
                 onSeasonChange={handleSeasonChange}
                 onLevelChange={handleLevelChange}
-                onPassChange={handlePassChange}
                 />
             </div>
         </div>
