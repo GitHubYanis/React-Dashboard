@@ -1,13 +1,23 @@
 .filtersComponent {
-    background-color: rgba(183, 219, 255, 0.5);
+    background-color: rgba(222, 227, 231, 0.5);
+    padding: 10px;
+    border-radius: 5px 5px 0 0;
+}
+
+.dropdownContainer {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-around;
+    align-items: flex-start;
+    max-width: 800px;
+    flex-wrap: wrap;
+    width: 100%;
 }
 
 p {
     color: rgb(0, 123, 255);
     font-size: 16px;
+    margin: 5px 0;
 }
 
 .dropdown-seasons,

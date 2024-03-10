@@ -24,7 +24,7 @@ const passes = [
 ];
 
 const Filters = ({ selectedSeason, selectedLevel, selectedPass, onSeasonChange, onLevelChange, onPassChange }) => {
-    
+
   const createDropdown = (options, className, onChange, selectedValue) => (
     <select className={className} onChange={(e) => onChange(e.target.value)} value={selectedValue}>
       {options.map((option) => (
@@ -37,22 +37,21 @@ const Filters = ({ selectedSeason, selectedLevel, selectedPass, onSeasonChange, 
 
   return (
     <div className={styles.filtersComponent}>
-        <div>
-            <p>Selectionnez une saison:
+        <div className={styles.dropdownContainer}>
+            <div>
+                <p>Selectionnez une saison:</p>
                 {createDropdown(seasons, styles['dropdown-seasons'], onSeasonChange, selectedSeason)}
-            </p>
-        </div>
-        <div>
-            <p>Selectionnez un niveau:
+            </div>
+            <div>
+                <p>Selectionnez un niveau:</p>
                 {createDropdown(levels, styles['dropdown-levels'], onLevelChange, selectedLevel)}
-            </p>
-        </div>
-        <div>
-            <p>Selectionnez un pass:
+            </div>
+            <div>
+                <p>Selectionnez un pass:</p>
                 {createDropdown(passes, styles['dropdown-passes'], onPassChange, selectedPass)}
-            </p>
+            </div>
         </div>
-    </div>
+    </div> 
   );
 };
 

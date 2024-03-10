@@ -16,13 +16,21 @@ const AveragePrice = ({ selectedSeason, selectedLevel, selectedPass }) => {
     const averagePrice = calculateAveragePrice();
 
     return (
-        <div className={styles.averagePriceContainer}>
+        <div>
             <h2>Prix Moyen</h2>
-            {filteredData.length > 0 ? (
-                <p>Le prix moyen est: {averagePrice.toFixed(2)}$</p>
-            ) : (
-                <p>Aucunes données...</p>
-            )}
+            <div className={styles.averagePriceContainer}>
+                {filteredData.length > 0 ? (
+                    <p className={styles.averagePrice}> Le prix moyen est: 
+                        <p className={styles.priceText}> 
+                            {averagePrice.toFixed(2)}$
+                        </p>
+                    </p>
+                ) : (
+                    <p className={styles.priceText}>
+                        Aucunes données...
+                    </p>
+                )}
+            </div>
         </div>
     ); 
 };

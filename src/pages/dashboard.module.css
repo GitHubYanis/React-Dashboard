@@ -1,0 +1,17 @@
+.dashboardContainer {
+    font-family: Arial, sans-serif;
+    margin: 30px;
+    padding: 20px;
+}
+
+h1 {
+    text-align: left;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.outputsContainer {
+    background-color: #f6f5f5;
+    padding: 20px;
+    border-radius: 0 0 5px 5px;
+}
