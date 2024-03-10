@@ -24,7 +24,7 @@ const passes = [
 ];
 
 const Filters = ({ selectedSeason, selectedLevel, selectedPass, onSeasonChange, onLevelChange, onPassChange }) => {
-
+    
   const createDropdown = (options, className, onChange, selectedValue) => (
     <select className={className} onChange={(e) => onChange(e.target.value)} value={selectedValue}>
       {options.map((option) => (

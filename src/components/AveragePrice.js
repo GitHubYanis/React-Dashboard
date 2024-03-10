@@ -1,15 +1,9 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import styles from './AveragePrice.module.css';
-import data from '../data/database.json';
+import useFilteredData from '../hooks/useFilteredData';
 
 const AveragePrice = ({ selectedSeason, selectedLevel, selectedPass }) => {
-    const filteredData = useMemo(() => {
-        return data.filter(entry => (
-            (!selectedSeason || entry.saison === selectedSeason) &&
-            (!selectedLevel || entry.niveau === selectedLevel) &&
-            (!selectedPass || entry.passe === selectedPass)
-        ));
-    }, [selectedSeason, selectedLevel, selectedPass]);
+    const filteredData = useFilteredData(selectedSeason, selectedLevel, selectedPass);
 
     const calculateAveragePrice = () => {
         const dataLength = filteredData.length;
@@ -24,12 +18,13 @@ const AveragePrice = ({ selectedSeason, selectedLevel, selectedPass }) => {
     return (
         <div className={styles.averagePriceContainer}>
             <h2>Prix Moyen</h2>
-            {averagePrice > 0 ? (
+            {filteredData.length > 0 ? (
                 <p>Le prix moyen est: {averagePrice.toFixed(2)}$</p>
-            ) : ( 
-                <p>Aucunes données...</p> 
+            ) : (
+                <p>Aucunes données...</p>
             )}
         </div>
     ); 
 };
+
 export default AveragePrice;
