@@ -21,13 +21,13 @@ ChartJS.register(
     Legend
 );
 
-const BarCharts = ({ selectedSeason, selectedLevel, selectedPass }) => {
+const BarCharts = ({ selectedSeason, selectedLevel, selectedPass, onSeasonChange, onLevelChange, onPassChange }) => {
     const filteredData = useFilteredData(selectedSeason, selectedLevel, selectedPass);
 
     const organizeChartData = () => {
         const levelData = {};
         const seasonData = {};
-        const ageGroupData = { "<24": 0, "24-28": 0, "29+": 0 };
+        const ageGroupData = { "24 ans et moins": 0, "24 à 28 ans": 0, "29 ans et plus": 0 };
 
         filteredData.forEach(({ niveau, saison, age }) => {
             // Levels data:
@@ -38,11 +38,11 @@ const BarCharts = ({ selectedSeason, selectedLevel, selectedPass }) => {
             
             // Age groups data:
             if (age < 24) {
-                ageGroupData["<24"] += 1;
+                ageGroupData["24 ans et moins"] += 1;
             } else if (age >= 24 && age <= 28) {
-                ageGroupData["24-28"] += 1;
+                ageGroupData["24 à 28 ans"] += 1;
             } else {
-                ageGroupData["29+"] += 1;
+                ageGroupData["29 ans et plus"] += 1;
             }
         });
         return { levelData, seasonData, ageGroupData}
@@ -50,61 +50,92 @@ const BarCharts = ({ selectedSeason, selectedLevel, selectedPass }) => {
 
     const { levelData, seasonData, ageGroupData } = organizeChartData();
 
-    const options = {
+    const generateChartOptions = (xAxisTitle) => ({
         responsive: true,
         plugins: {
             legend: { position: "top" }
         },
-    };
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: xAxisTitle,
+                },
+            }
+        },
+        onClick: (_, elements) => {
+            if(xAxisTitle !== 'Groupe d\'Âge' && elements.length > 0) {
+                const orderedLabels = { 
+                    levels: ["pro", "moyen", "novice"], 
+                    seasons: ["été", "printemps", "automne", "hiver"] 
+                };
+                const clickedElementIndex = elements[0].index;
+    
+                let selectedBar;
+                switch (xAxisTitle) {
+                    case 'Saisons':
+                        selectedBar = orderedLabels.seasons[clickedElementIndex];
+                        onSeasonChange(selectedBar);
+                        break;
+                    case 'Niveaux':
+                        selectedBar = orderedLabels.levels[clickedElementIndex];
+                        onLevelChange(selectedBar);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        },
+    });
 
     return (
         <div>
             <h2>Statistiques</h2>
             {filteredData.length > 0 ? (
                 <div className={styles.barChartsContainer}>
-                        <div className={`${styles.chart} ${styles.levelChart}`}>
+                        <div className={styles.chart}>
                             <h3>Quantité par Niveau</h3>
                             <Bar data={{
                                     labels: Object.keys(levelData),
                                     datasets: [{
-                                        label: 'Quantité par Niveau',
+                                        label: 'Quantité',
                                         data: Object.values(levelData),
                                         backgroundColor: 'rgba(75,192,192,0.2)',
                                         borderColor: 'rgba(75,192,192,1)',
                                         borderWidth: 1,
                                     }],
                                 }}
-                                options={options}
+                                options={generateChartOptions('Niveaux')}
                             />
                         </div>
-                    <div className={`${styles.chart} ${styles.seasonChart}`}>
+                    <div className={styles.chart}>
                         <h3>Quantité par Saison</h3>
                         <Bar data={{
                                 labels: Object.keys(seasonData),
                                 datasets: [{
-                                    label: 'Quantité par Saison',
+                                    label: 'Quantité',
                                     data: Object.values(seasonData),
                                     backgroundColor: 'rgba(255,99,132,0.2)',
                                     borderColor: 'rgba(255,99,132,1)',
                                     borderWidth: 1,
                                 }],
                             }}
-                            options={options}
+                            options={generateChartOptions('Saisons')}
                         />
                     </div>
-                    <div className={`${styles.chart} ${styles.ageGroupChart}`}>
+                    <div className={styles.chart}>
                         <h3>Quantité par Groupe d'Âge</h3>
                         <Bar data={{
                                 labels: Object.keys(ageGroupData),
                                 datasets: [{
-                                    label: 'Quantité par Groupe d\'Âge',
+                                    label: 'Quantité',
                                     data: Object.values(ageGroupData),
                                     backgroundColor: 'rgba(153, 102, 255, 0.2)',
                                     borderColor: 'rgba(153, 102, 255, 1)',
                                     borderWidth: 1,
                                 }]
                             }}
-                            options={options}
+                            options={generateChartOptions('Groupes d\'Âge')}
                         />
                     </div>
                 </div>
